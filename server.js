@@ -7,13 +7,19 @@ const dotenv = require('dotenv');
 dotenv.config()
 const port = process.env.PORT;
 
-// Handlebar Engine Setup
-app.engine("handlebars", engine());
-app.set("view engine", "handlebars");
-app.set("views", "./views");
+// Setup 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
-    res.render("home")
-})
+// Handlebars Engine Setup
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', './views');
+
+// Set db
+require('./data/reddit-db');
+
+// Controllers 
+require('./controllers/posts')(app);
 
 app.listen(port);
