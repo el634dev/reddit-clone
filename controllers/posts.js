@@ -17,4 +17,8 @@ module.exports = (app) => {
         // Save instance of POST model to DB and redirect to the post
         post.save(() => res.redirect('/'));
     });
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> f8d3c1b057d96ebfb276740e5cf4d5ae1e467830

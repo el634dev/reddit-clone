@@ -15,6 +15,15 @@ app.use(express.urlencoded({ extended: false }));
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
+<<<<<<< HEAD
+
+// Set db
+require('./data/reddit-db');
+
+// Controllers 
+require('./controllers/posts')(app);
+=======
+>>>>>>> f8d3c1b057d96ebfb276740e5cf4d5ae1e467830
 
 // Set db
 require('./data/reddit-db');
