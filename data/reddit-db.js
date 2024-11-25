@@ -4,10 +4,8 @@ const dotenv = require('dotenv');
 assert = require('assert');
 
 dotenv.config()
-const connection_string = process.env.CONNECTION_STRING;
-
-// URl 
-const url = connection_string;
+// DB URL
+const url = process.env.CONNECTION_STRING;
 
 // Connection Logic
 mongoose.connect(url).catch((err) => {
