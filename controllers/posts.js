@@ -12,18 +12,19 @@ module.exports = (app) => {
     });
     
     // Look Up The Post
-    app.get('/posts/:id', async (req, res) => {
-        try {
-            const post = await Post.findById(req.params.id).lean();
-
-            if (!post) {
-                return res.status(404).send('Post not found')
-            }
-            return res.render('posts-show', { post })
-        } catch (err) {
-            console.log(err.message);
-        };
-    })
+    app.get('/posts/:id', (req, res) => {
+        Post.findById(req.params.id).lean()
+            .then((post) => {
+                if (!post) {
+                    return res.status(404).send('Post not found');
+                }
+                res.render('posts-show', { post });
+            })
+            .catch((err) => {
+                console.log(err.message);
+                res.status(500).send('Internal Server Error');
+            });
+      });
 
     // CREATE
     app.post('/posts/new', (req, res) => {
@@ -31,6 +32,11 @@ module.exports = (app) => {
         const post = new Post(req.body);
 
         // Save instance of POST model to DB and redirect to the post
-        post.save(() => res.redirect('/'));
+        post.save()
+            .then(() => res.redirect('/'))
+            .catch((err) => {
+                console.log(err.message);
+                res.status(500).send('Internal Server Error');
+            });
     });
 };

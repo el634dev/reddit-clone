@@ -8,7 +8,7 @@ dotenv.config()
 const url = process.env.CONNECTION_STRING;
 
 // Connection Logic
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true}).catch((err) => {
+mongoose.connect(url).catch((err) => {
   //callback code
   assert.equal(null, err);
   console.log('Connected successfully to database');

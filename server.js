@@ -29,3 +29,5 @@ require('./data/reddit-db');
 require('./controllers/posts')(app);
 
 app.listen(port);
+
+module.exports = app;
