@@ -22,6 +22,7 @@ app.set('views', './views');
 
 // Controllers 
 require('./controllers/posts')(app);
+require('./controllers/comments.js')(app);
 
 app.listen(port);
 
