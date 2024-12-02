@@ -1,3 +1,4 @@
+// controllers/posts.js
 const Post = require('../models/post');
 
 module.exports = (app) => {
@@ -11,32 +12,33 @@ module.exports = (app) => {
         };
     });
     
-    // Look Up The Post
-    app.get('/posts/:id', (req, res) => {
-        Post.findById(req.params.id).lean()
-            .then((post) => {
-                if (!post) {
-                    return res.status(404).send('Post not found');
-                }
-                res.render('posts-show', { post });
-            })
-            .catch((err) => {
-                console.log(err.message);
-                res.status(500).send('Internal Server Error');
-            });
-      });
-
     // CREATE
     app.post('/posts/new', (req, res) => {
-        // Instantiate a new instance of POST model
+        // INSTANTIATE INSTANCE OF POST MODEL
         const post = new Post(req.body);
+    
+        // SAVE INSTANCE OF POST MODEL TO DB AND REDIRECT TO THE ROOT
+        post.save(() => res.redirect('/'));
+    });
 
-        // Save instance of POST model to DB and redirect to the post
-        post.save()
-            .then(() => res.redirect('/'))
-            .catch((err) => {
+    // Look Up The Post
+    app.get('/post/:id', (req, res) => {
+        Post.findById(req.params.id).lean()
+          .then((post) => res.render('posts-show', { post }))
+          .catch((err) => {
                 console.log(err.message);
-                res.status(500).send('Internal Server Error');
-            });
+                res.status(500).send('Problem with the server');
+          });
+    });
+
+    // Subreddit
+    app.get('/n/:subreddit', async (req, res) => {
+        try {
+            const posts = await Post.find({ subreddit: req.params.subreddit }).lean()
+            res.render('posts-index', { posts })
+        } catch (err) {
+            console.log(err.message);
+            return res.status(500).send('Internal Server Error');
+        };
     });
 };

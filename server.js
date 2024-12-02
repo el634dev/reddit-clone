@@ -1,29 +1,24 @@
 const { engine } = require("express-handlebars");
+const bodyParser = require('body-parser');
 
 const express = require("express");
 const app = express();
 
 const dotenv = require('dotenv');
-dotenv.config()
+dotenv.config();
 const port = process.env.PORT;
 
 // Setup 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Set db
+require('./data/reddit-db');
 
 // Handlebars Engine Setup
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
-
-// Set db
-require('./data/reddit-db');
-
-// Controllers 
-require('./controllers/posts')(app);
-
-// Set db
-require('./data/reddit-db');
 
 // Controllers 
 require('./controllers/posts')(app);

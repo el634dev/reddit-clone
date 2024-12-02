@@ -19,7 +19,7 @@ describe('Posts', () => {
         summary: 'post summary'
     };
 
-    it('Should create with valid attributes at POST /posts/new', (done) => {
+    it('Should create with valid attributes at POST /new-post', (done) => {
         // Checks how many posts there are now
         Post.estimatedDocumentCount()
           .then((initialDocCount) => {
