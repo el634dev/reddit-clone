@@ -28,6 +28,10 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 // app.set('views', './views');
 
+// Middleware
+const checkAuth = require('./middleware/checkAuth');
+app.use(checkAuth);
+
 // Controllers 
 require('./controllers/posts')(app);
 require('./controllers/comments.js')(app);
