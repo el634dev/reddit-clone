@@ -14,9 +14,10 @@ const should = chai.should();
 
 describe('Posts', () => {
     const newPost = {
-        title: 'post title',
+        title: 'google',
         url: 'https://www.google.com',
-        summary: 'post summary'
+        summary: 'google website url',
+        subreddit: 'websites',
     };
 
     it('Should create with valid attributes at POST /new-post', (done) => {

@@ -1,11 +1,12 @@
 const { engine } = require("express-handlebars");
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const express = require("express");
 const app = express();
+app.use(cookieParser());
 
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config();
 const port = process.env.PORT;
 
 // Setup 
@@ -23,6 +24,7 @@ app.set('views', './views');
 // Controllers 
 require('./controllers/posts')(app);
 require('./controllers/comments.js')(app);
+require('./controllers/auth.js')(app);
 
 app.listen(port);
 
