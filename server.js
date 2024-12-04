@@ -1,12 +1,13 @@
-const { engine } = require("express-handlebars");
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+require('dotenv').config();
 
 const express = require("express");
 const app = express();
-app.use(cookieParser());
+const expbs = require("express-handlebars");
+const path = require('path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
-require('dotenv').config();
+app.use(cookieParser());
 const port = process.env.PORT;
 
 // Setup 
@@ -17,9 +18,15 @@ app.use(bodyParser.json());
 require('./data/reddit-db');
 
 // Handlebars Engine Setup
-app.engine('handlebars', engine());
+const hbs = expbs.create({
+    defaultLayout: 'main',
+    layoutsDir: path.join(__dirname, '/views/layouts'),
+    partialsDir: path.join(__dirname,'/views/partials')
+})
+
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
-app.set('views', './views');
+// app.set('views', './views');
 
 // Controllers 
 require('./controllers/posts')(app);

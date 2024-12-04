@@ -13,6 +13,10 @@ module.exports = (app) => {
         };
     });
     
+    app.get('/posts/new', (req, res) => {
+        res.render('posts-new')
+    })
+    
     // CREATE
     app.post('/posts/new', async (req, res) => {
         try {
