@@ -20,16 +20,13 @@ module.exports = (app) => {
     })
     
     // CREATE
-    app.post('/posts/new', async (req, res) => {
-        try {
-            // INSTANTIATE INSTANCE OF POST MODEL
-            const post = new Post(req.body);
-        
-            // SAVE INSTANCE OF POST MODEL TO DB AND REDIRECT TO THE ROOT
-            await post.save()
-            res.redirect('/');
-        } catch (err) {
-            console.log(err);
+    app.post('/posts/new', (req, res) => {
+        if (req.user) {
+        const post = new Post(req.body);
+    
+        post.save(() => res.redirect('/'));
+        } else {
+        return res.status(401); // UNAUTHORIZED
         }
     });
 
