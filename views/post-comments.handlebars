@@ -1,0 +1,8 @@
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+        {{#each post.comments}}
+            <p>{{this.content}}</p>
+            <p class="text-right">{{this.author.username}}</p>
+        {{/each}}
+    </div>
+</div>

@@ -1,3 +1,4 @@
+// controllers/comments.js --- below is the model
 const Comment = require('../models/comment');
 
 module.exports = (app) => {
@@ -6,6 +7,7 @@ module.exports = (app) => {
         try {
             // INSTANTIATE INSTANCE OF MODEL
             const comment = new Comment(req.body);
+            comment.author = req.user._id;
 
             // SAVE INSTANCE OF Comment MODEL TO DB
             await comment.save()

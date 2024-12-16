@@ -10,13 +10,16 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 const port = process.env.PORT;
 
+// -----------------
 // Setup 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// -----------------
 // Set db
 require('./data/reddit-db');
 
+// -----------------
 // Handlebars Engine Setup
 const hbs = expbs.create({
     defaultLayout: 'main',
@@ -28,10 +31,12 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 // app.set('views', './views');
 
+// -----------------
 // Middleware
 const checkAuth = require('./middleware/checkAuth');
 app.use(checkAuth);
 
+// -----------------
 // Controllers 
 require('./controllers/posts')(app);
 require('./controllers/comments.js')(app);

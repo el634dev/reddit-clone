@@ -15,18 +15,17 @@ module.exports = (app) => {
     });
     
     app.get('/posts/new', (req, res) => {
-        const currentUser = req.user;
-        res.render('posts-new', { currentUser })
+        return res.render('posts-new')
     })
     
     // CREATE
     app.post('/posts/new', (req, res) => {
         if (req.user) {
-        const post = new Post(req.body);
-    
-        post.save(() => res.redirect('/'));
+          const post = new Post(req.body);
+      
+          post.save(() => res.redirect('/'));
         } else {
-        return res.status(401); // UNAUTHORIZED
+          return res.status(401); // UNAUTHORIZED
         }
     });
 
@@ -53,12 +52,11 @@ module.exports = (app) => {
     app.get('/post/:postId', async (req, res) => {
         try {
             const currentUser = req.user;
-            const post = await Post.findById(req.params.id).lean()
+            const post = await Post.findById(req.params.id).lean().populate({ path:'comments', populate: { path: 'author' } }).populate('author')
 
             return res.render('posts-show', { post, currentUser })
         } catch (err) {
             console.log(err.message);
-            res.status(500).send('Problem with the server');
         };
     });
 
